@@ -29,5 +29,6 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="0dp"/>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

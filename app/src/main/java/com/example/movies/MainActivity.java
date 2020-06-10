@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         });
         mRequestQueue.add(request);
     }
+
     private void topList() {
         String url = "https://api.themoviedb.org/3/movie/top_rated?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
