@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -106,19 +107,24 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Random rand = new Random();
                             JSONArray jsonArray = response.getJSONArray("results");
-                            JSONObject firsthit = jsonArray.getJSONObject(0);
-                            String movieBack= "https://image.tmdb.org/t/p/original" + firsthit.getString("backdrop_path");
-                            mTopMovieName.setText(firsthit.getString("title"));
-                            trailerVideo(firsthit.getInt("id"),firsthit.getString("title"));
+
+                            //Get random movie
+                            JSONObject randomhit = jsonArray.getJSONObject(rand.nextInt(jsonArray.length()-1));
+
+                            //Add the poster and name and trailer of the random hit
+                            String movieBack= "https://image.tmdb.org/t/p/original" + randomhit.getString("backdrop_path");
+                            mTopMovieName.setText(randomhit.getString("title"));
+                            trailerVideo(randomhit.getInt("id"),randomhit.getString("title"));
                             Picasso.get().load(movieBack).fit().centerInside().into(mFirstImage);
+
+                            //Add movies to the list
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String movieName = hit.getString("title");
                                 String movieCategory = hit.getString("release_date");
                                 String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
-
-
                                 int id = hit.getInt("id");
                                 mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
                             }
@@ -135,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 error.printStackTrace();
             }
         });
+
         mRequestQueue.add(request);
     }
 
