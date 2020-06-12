@@ -10,39 +10,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ExampleViewHolder> {
+public class CastAdapter extends RecyclerView.Adapter<CastAdapter.ExampleViewHolder> {
     private Context mContext;
-    private ArrayList<MovieItem> mExampleList;
+    private ArrayList<CastMember> mExampleList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position,ArrayList<MovieItem> t);
+        void onItemClick(int position);
     }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
 
-    public MoviesAdapter(Context context, ArrayList<MovieItem> exampleList) {
+    public CastAdapter(Context context, ArrayList<CastMember> exampleList) {
         mContext = context;
         mExampleList = exampleList;
     }
 
     @Override
     public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.movie_item, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.cast_item, parent, false);
         return new ExampleViewHolder(v);
     }
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
-        MovieItem currentItem = mExampleList.get(position);
-        String posterurl = currentItem.getPoster();
-        String backurl = currentItem.getBack();
-        String movieName = currentItem.getName();
-        String movieCategory = currentItem.getCategory();
-        holder.mMovieName.setText(movieName);
-        holder.mMovieCategory.setText(movieCategory);
-        Picasso.get().load(posterurl).fit().centerInside().into(holder.mMoviePoster);
+        CastMember currentItem = mExampleList.get(position);
+        String posterurl = currentItem.getPic();
+        String castName= currentItem.getName();
+        String characterName = currentItem.getCharacter();
+        holder.mCastName.setText(castName);
+        holder.mCharacterName.setText(characterName);
+        Picasso.get().load(posterurl).fit().centerInside().into(holder.mCastPic);
         //Picasso.get().load(backurl).fit().centerInside().into(holder.mMovieBack);
 //j
     }
@@ -52,25 +52,22 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ExampleVie
     }
 
     public class ExampleViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mMoviePoster;
-        public ImageView mMovieBack;
-        public TextView mMovieName;
-        public TextView mMovieCategory;
+        public ImageView mCastPic;
+        public TextView mCastName;
+        public TextView mCharacterName;
         public ExampleViewHolder(View itemView) {
             super(itemView);
-            mMoviePoster = itemView.findViewById(R.id.movie_poster);
-            mMovieBack = itemView.findViewById(R.id.back);
-            mMovieName = itemView.findViewById(R.id.movie_name);
-            mMovieCategory = itemView.findViewById(R.id.movie_category);
+            mCastPic = itemView.findViewById(R.id.cast_pic);
+            mCastName = itemView.findViewById(R.id.cast_name);
+            mCharacterName = itemView.findViewById(R.id.character_name);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
                         int position = getAdapterPosition();
-
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position,mExampleList);
+                            mListener.onItemClick(position);
                         }
                     }
                 }

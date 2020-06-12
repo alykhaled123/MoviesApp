@@ -21,19 +21,20 @@
             android:scrollbars="vertical">
 
             <!--Header Layout-->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#111111"
+                android:weightSum="100"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <!--Title Text-->
                 <TextView
                     android:id="@+id/titletext"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="89"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/profileicon"
                     android:background="#111111"
                     android:fontFamily="@font/changaone_regular"
                     android:paddingLeft="20dp"
@@ -46,46 +47,43 @@
                 <!--Profile Icon-->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/profileicon"
-                    android:layout_width="50dp"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="11"
+                    android:layout_height="match_parent"
                     android:background="#111111"
                     app:cardCornerRadius="40dp">
 
                     <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         android:background="#111111"
                         android:scaleType="fitXY"
                         android:src="@drawable/profilepic" />
                 </androidx.cardview.widget.CardView>
-            </RelativeLayout>
+            </LinearLayout>
 
             <!--Search bar-->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="#1C1C1C"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                app:cardUseCompatPadding="true">
+
 
                 <EditText
+                    android:id="@+id/searchText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#1C1C1C"
+                    android:background="@drawable/rounded_edittext"
                     android:fontFamily="@font/suprema_bold"
                     android:hint="Search TV Shows and Movies"
                     android:padding="10dp"
                     android:textColor="#5D5D5D"
+                    android:layout_margin="10dp"
                     android:textColorHint="#745D5D5D" />
-            </androidx.cardview.widget.CardView>
+
 
             <!--Top movie poster-->
             <FrameLayout
+                android:id="@+id/topmovie_poster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -107,20 +105,43 @@
                         android:background="@drawable/gradient_topmovie" />
 
                 </FrameLayout>
-
-                <TextView
-                    android:id="@+id/topmovie_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="40dp"
-                    android:fontFamily="@font/suprema_bold"
-                    android:gravity="bottom"
-                    android:text="Scoop"
-                    android:textAlignment="gravity"
-                    android:textColor="#FFF"
-                    android:textSize="40dp" />
+                    android:orientation="vertical"
+                    android:weightSum="100">
+                    <TextView
+                        android:id="@+id/topmovie_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/suprema_bold"
+                        android:gravity="bottom"
+                        android:text="Lorem"
+                        android:maxLength="40"
+                        android:textAlignment="gravity"
+                        android:textColor="#FFF"
+                        android:textSize="30dp" />
+                    <TextView
+                        android:id="@+id/topmovie_overview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="70"
+                        android:maxLines="4"
+
+                        android:layout_marginRight="20dp"
+                        android:fontFamily="@font/suprema_bold"
+                        android:text="Scoop"
+                        android:textAlignment="gravity"
+                        android:textColor="#FFF"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+
             </FrameLayout>
 
             <TextView

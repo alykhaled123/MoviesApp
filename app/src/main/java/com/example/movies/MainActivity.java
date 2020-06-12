@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -29,12 +34,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoviesAdapter.OnItemClickListener  {
+
+    private String posterID;
 
     private RecyclerView mTrendingView;
     private RecyclerView mTopView;
+
     private ImageView mFirstImage;
     private TextView mTopMovieName;
+    private TextView mTopMovieOverview;
 
     private WebView mTrailer;
     private TextView mTrailerName;
@@ -45,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<MovieItem> mTopList;
     private MoviesAdapter mTopAdapter;
+    
+    private FrameLayout mMoviePoster;
+
+    private EditText mSearchText;
 
 
     @Override
@@ -86,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
         mFirstImage = findViewById(R.id.back);
         mTopMovieName = findViewById(R.id.topmovie_name);
+        mTopMovieOverview = findViewById(R.id.topmovie_overview);
+
 
         mTrailer = findViewById(R.id.trailer);
         mTrailer.getSettings().setLoadsImagesAutomatically(true);
@@ -95,6 +110,32 @@ public class MainActivity extends AppCompatActivity {
         mTrailerName = findViewById(R.id.movieTrailer);
 
         mRequestQueue = Volley.newRequestQueue(this);
+        
+        mMoviePoster = (FrameLayout) findViewById(R.id.topmovie_poster);
+        mMoviePoster.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Intent detailIntent = new Intent(MainActivity.this, MovieDetailsActivity.class);
+                detailIntent.putExtra("id", posterID);
+                startActivity(detailIntent);
+            }
+        });
+
+        mSearchText = findViewById(R.id.searchText);
+        mSearchText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    Intent detailIntent = new Intent(MainActivity.this, SearchActitivty.class);
+                    String gg = String.valueOf(mSearchText.getText());
+                    detailIntent.putExtra("query", gg);
+                    startActivity(detailIntent);
+                    return true;
+                }
+                return false;
+            }
+        });
         trendingList();
         //mRequestQueue.add(trendingList("",R.id.recycler_view));
         topList();
@@ -113,11 +154,15 @@ public class MainActivity extends AppCompatActivity {
                             //Get random movie
                             JSONObject randomhit = jsonArray.getJSONObject(rand.nextInt(jsonArray.length()-1));
 
-                            //Add the poster and name and trailer of the random hit
+                            //Add the poster and name of the random hit
                             String movieBack= "https://image.tmdb.org/t/p/original" + randomhit.getString("backdrop_path");
-                            mTopMovieName.setText(randomhit.getString("title"));
-                            trailerVideo(randomhit.getInt("id"),randomhit.getString("title"));
                             Picasso.get().load(movieBack).fit().centerInside().into(mFirstImage);
+
+                            mTopMovieName.setText(randomhit.getString("title"));
+                            mTopMovieOverview.setText(randomhit.getString("overview"));
+
+                            //Set trailer video to random hit
+                            trailerVideo(randomhit.getInt("id"),randomhit.getString("title"));
 
                             //Add movies to the list
                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -125,12 +170,14 @@ public class MainActivity extends AppCompatActivity {
                                 String movieName = hit.getString("title");
                                 String movieCategory = hit.getString("release_date");
                                 String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
-                                int id = hit.getInt("id");
+                                String id = hit.getString("id");
                                 mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
                             }
 
                             mTrendingAdapter = new MoviesAdapter(MainActivity.this, mTrendingList);
                             mTrendingView.setAdapter(mTrendingAdapter);
+                            mTrendingAdapter.setOnItemClickListener(MainActivity.this);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -159,12 +206,14 @@ public class MainActivity extends AppCompatActivity {
                                 String movieCategory = hit.getString("release_date");
                                 String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
                                 String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
+                                String id = hit.getString("id");
 
-                                int id = hit.getInt("id");
                                 mTopList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
                             }
                             mTopAdapter = new MoviesAdapter(MainActivity.this, mTopList);
                             mTopView.setAdapter(mTopAdapter);
+                            mTopAdapter.setOnItemClickListener(MainActivity.this);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -180,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
     private void trailerVideo(int id, String name) {
         final String n = name;
         String url = "https://api.themoviedb.org/3/movie/"+id+"/videos?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US";
+        posterID = String.valueOf(id);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -202,5 +252,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mRequestQueue.add(request);
+    }
+
+    public void onItemClick(int position,ArrayList<MovieItem> t ) {
+        Intent detailIntent = new Intent(this, MovieDetailsActivity.class);
+        MovieItem clickedItem = t.get(position);
+        detailIntent.putExtra("id", clickedItem.getId());
+        startActivity(detailIntent);
     }
 }

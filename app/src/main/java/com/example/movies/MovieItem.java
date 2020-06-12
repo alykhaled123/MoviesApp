@@ -1,13 +1,13 @@
 package com.example.movies;
 
 public class MovieItem {
-    private int mId;
+    private String mId;
     private String mName;
     private String mCategory;
     private String mPoster;
     private String mBack;
 
-    public MovieItem (int id, String name, String category, String poster, String back)
+    public MovieItem (String id, String name, String category, String poster, String back)
     {
         mId = id;
         mName = name;
@@ -32,7 +32,7 @@ public class MovieItem {
     {
         return mCategory;
     }
-    public int getId()
+    public String getId()
     {
         return  mId;
     }
