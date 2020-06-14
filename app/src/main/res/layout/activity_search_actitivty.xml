@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_height="match_parent"
+<LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#111111"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/searchTextPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_edittext"
+        android:fontFamily="@font/suprema_bold"
+        android:hint="Search TV Shows and Movies"
+        android:padding="10dp"
+        android:textColor="#5D5D5D"
+        android:layout_margin="10dp"
+        android:textColorHint="#745D5D5D" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,9 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-
             android:orientation="horizontal">
 
         </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

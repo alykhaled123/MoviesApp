@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home"/>
+        android:icon="@drawable/ic_local_movies_black_24dp"
+        android:title="Movies"/>
 
     <item
-        android:id="@+id/nav_coming"
-        android:icon="@drawable/ic_fiber_new_black_24dp"
-        android:title="Coming soon"
+        android:id="@+id/nav_actors"
+        android:icon="@drawable/ic_live_tv_black_24dp"
+        android:title="TV Shows"
         />
     <item
         android:id="@+id/nav_menu"

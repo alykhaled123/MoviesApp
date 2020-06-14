@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#111111"
+    tools:context=".CastDetails">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#111111"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/trailerFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="600dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_topmovie" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/castname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="#FFF"
+                    android:padding="15dp"
+                    android:layout_gravity="bottom"
+                    android:fontFamily="@font/suprema_bold"
+                    android:textSize="30dp"/>
+            </FrameLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#1C1C1C"/>
+
+            <TextView
+                android:id="@+id/castbirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Born: "
+                android:textColor="#FFF"
+                android:padding="15dp"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/suprema_bold"
+                android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/castplace"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Place of birth: "
+                android:textColor="#FFF"
+                android:padding="15dp"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/suprema_bold"
+                android:textSize="15dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#1C1C1C"/>
+            <ScrollView
+                android:id="@+id/descScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/castdesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    android:textColor="#FFF"
+                    android:padding="15dp"
+                    android:fontFamily="@font/suprema_bold"
+                    android:textSize="15dp"/>
+            </ScrollView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#1C1C1C"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:text="Filmography"
+            android:padding="15dp"
+            android:fontFamily="@font/suprema_bold"
+            android:textSize="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cast_movies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</ScrollView>
+

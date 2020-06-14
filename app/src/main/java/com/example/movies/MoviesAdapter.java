@@ -59,7 +59,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ExampleVie
         public ExampleViewHolder(View itemView) {
             super(itemView);
             mMoviePoster = itemView.findViewById(R.id.movie_poster);
-            mMovieBack = itemView.findViewById(R.id.back);
             mMovieName = itemView.findViewById(R.id.movie_name);
             mMovieCategory = itemView.findViewById(R.id.movie_category);
 

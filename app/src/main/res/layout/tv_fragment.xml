@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView2d"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#111111"
+
+        tools:context=".MainActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
+
+            <!--Header Layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#111111"
+                android:weightSum="100"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!--Title Text-->
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_weight="89"
+                    android:layout_height="wrap_content"
+                    android:background="#111111"
+                    android:fontFamily="@font/changaone_regular"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Netflix"
+                    android:textColor="#b81522"
+                    android:textSize="30dp" />
+
+                <!--Profile Icon-->
+                <!--<androidx.cardview.widget.CardView
+                    android:id="@+id/profileicon"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_weight="11"
+                    android:layout_height="match_parent"
+                    android:background="#111111"
+                    app:cardCornerRadius="40dp">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="#111111"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/profilepic" />
+                </androidx.cardview.widget.CardView>-->
+            </LinearLayout>
+
+            <!--Search bar-->
+
+
+            <EditText
+                android:id="@+id/TvSearchText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edittext"
+                android:fontFamily="@font/suprema_bold"
+                android:hint="Search TV Shows"
+                android:padding="10dp"
+                android:textColor="#5D5D5D"
+                android:layout_margin="10dp"
+                android:textColorHint="#745D5D5D" />
+
+
+            <!--Top movie poster-->
+            <FrameLayout
+                android:id="@+id/topShow_poster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/TvBack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/topmovieplacholder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_topmovie" />
+
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="100">
+                    <TextView
+                        android:id="@+id/topShow_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/suprema_bold"
+                        android:gravity="bottom"
+                        android:text="Lorem"
+                        android:maxLength="40"
+                        android:textAlignment="gravity"
+                        android:textColor="#FFF"
+                        android:textSize="30dp" />
+                    <TextView
+                        android:id="@+id/topShow_overview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="70"
+                        android:maxLines="4"
+                        android:layout_marginRight="20dp"
+                        android:fontFamily="@font/suprema_bold"
+                        android:text="Scoop"
+                        android:textAlignment="gravity"
+                        android:textColor="#FFF"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/suprema_bold"
+                android:text="Trending"
+                android:textColor="#FFF"
+                android:textSize="20dp" />
+
+            <!--Trending Movies View-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/TvTrending_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#1C1C1C"/>
+            <TextView
+                android:id="@+id/TvTrailer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/suprema_bold"
+                android:text="Trailer"
+                android:textAlignment="viewStart"
+                android:textColor="#FFF"
+                android:textSize="20dp" />
+
+            <!--Trailer Video-->
+            <WebView
+                android:id="@+id/ShowTrailer"
+                android:layout_width="match_parent"
+                android:layout_height="270dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#1C1C1C"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/suprema_bold"
+                android:text="Top Rated"
+                android:textAlignment="viewStart"
+                android:textColor="#FFF"
+                android:textSize="20dp" />
+
+            <!--Top Rated Movies View-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ShowTop_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

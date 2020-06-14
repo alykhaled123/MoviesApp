@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements CastAdapter.OnItemClickListener , MoviesAdapter.OnItemClickListener {
     private RequestQueue mRequestQueue;
 
     private ArrayList<MovieItem> mSimilarList;
@@ -127,25 +128,32 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mRequestQueue = Volley.newRequestQueue(this);
-        getDetails(intent.getStringExtra("id"));
-        getSimilarMovies(intent.getStringExtra("id"));
-        getCast(intent.getStringExtra("id"));
+        getDetails(intent.getStringExtra("id"),intent.getStringExtra("type"));
+        getSimilarMovies(intent.getStringExtra("id"),intent.getStringExtra("type"));
+        getCast(intent.getStringExtra("id"),intent.getStringExtra("type"));
 
     }
 
-    private void getDetails(String id) {
-        String url = "https://api.themoviedb.org/3/movie/"+id+"?api_key=2d3edd3500f7064e849c3694f8e0327c&append_to_response=videos,images";
+    private void getDetails(String id, final String type) {
+        String url = "https://api.themoviedb.org/3/"+type+"/"+id+"?api_key=2d3edd3500f7064e849c3694f8e0327c&append_to_response=videos,images";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            if (type.equals("tv"))
+                            {
+                                movieName.setText(response.getString("name"));
+                                movieOverview.setText(response.getString("overview"));
+                            }
+                            else
+                            {
+                                movieName.setText(response.getString("title"));
+                                movieOverview.setText(response.getString("overview"));
+                            }
 
-                            movieName.setText(response.getString("title"));
-                            movieOverview.setText(response.getString("overview"));
 
 
-                            String movieCategory = response.getString("release_date");
                             String moviePosterUrl = "https://image.tmdb.org/t/p/original" + response.getString("poster_path");
                             String movieBack= "https://image.tmdb.org/t/p/original" + response.getString("backdrop_path");
                             Picasso.get().load(moviePosterUrl).fit().centerInside().into(moviePoster);
@@ -181,8 +189,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
         mRequestQueue.add(request);
     }
-    private void getSimilarMovies(String id) {
-        String url = "https://api.themoviedb.org/3/movie/"+id+"/recommendations?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
+    private void getSimilarMovies(String id, final String type) {
+        String url = "https://api.themoviedb.org/3/"+type+"/"+id+"/recommendations?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -191,8 +199,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             JSONArray jsonArray = response.getJSONArray("results");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
-                                String movieName = hit.getString("title");
-                                String movieCategory = hit.getString("release_date");
+                                String movieName ;
+                                String movieCategory;
+                                if (type.equals("tv"))
+                                {
+                                    movieName = hit.getString("name");
+                                    movieCategory = hit.getString("first_air_date");
+                                }
+                                else
+                                {
+                                    movieName = hit.getString("title");
+                                    movieCategory = hit.getString("release_date");
+                                }
+
                                 String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
                                 String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
                                 String id = hit.getString("id");
@@ -201,6 +220,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             }
                             mSimilarAdapter = new MoviesAdapter(MovieDetailsActivity.this, mSimilarList);
                             mSimilarMovies.setAdapter(mSimilarAdapter);
+                            mSimilarAdapter.setOnItemClickListener(MovieDetailsActivity.this);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -213,8 +234,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
         mRequestQueue.add(request);
     }
-    private void getCast(String id) {
-        String url = "https://api.themoviedb.org/3/movie/"+id+"/credits?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
+    private void getCast(String id, String type) {
+        String url = "https://api.themoviedb.org/3/"+type+"/"+id+"/credits?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -232,6 +253,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             }
                             mCastAdapter = new CastAdapter(MovieDetailsActivity.this, mCastList);
                             mCastView.setAdapter(mCastAdapter);
+                            mCastAdapter.setOnItemClickListener(MovieDetailsActivity.this);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -243,5 +266,23 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
         mRequestQueue.add(request);
+    }
+
+    public void onItemClickCast(int position, ArrayList<CastMember> t ) {
+        Intent detailIntent = new Intent(this, CastDetails.class);
+        CastMember clickedItem = t.get(position);
+        detailIntent.putExtra("id", clickedItem.getId());
+        startActivity(detailIntent);
+    }
+
+    @Override
+    public void onItemClick(int position, ArrayList<MovieItem> t) {
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+        Intent detailIntent = new Intent(this, MovieDetailsActivity.class);
+        MovieItem clickedItem = t.get(position);
+        detailIntent.putExtra("id", clickedItem.getId());
+        detailIntent.putExtra("type",type);
+        startActivity(detailIntent);
     }
 }

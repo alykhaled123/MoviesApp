@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +36,8 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
     private RequestQueue mRequestQueue;
     private ArrayList<MovieItem> mTrendingList;
     private MoviesAdapter mTrendingAdapter;
+    private EditText mSearchText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +74,28 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
         mRequestQueue = Volley.newRequestQueue(this);
 
         Intent intent = getIntent();
-        trendingList(intent.getStringExtra("query"));
+        trendingList(intent.getStringExtra("query"),intent.getStringExtra("type"));
+
+        mSearchText = findViewById(R.id.searchTextPage);
+        mSearchText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                Intent intent = getIntent();
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    trendingList(mSearchText.getText().toString(),intent.getStringExtra("type"));
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
-    private void trendingList(String query) {
-        String url = "https://api.themoviedb.org/3/search/movie?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&query="+query+"&page=1&include_adult=true";
+    private void trendingList(String query, final String type) {
+        mTrendingList = new ArrayList<>();
+        String url = "https://api.themoviedb.org/3/search/"+type+"?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&query="+query+"&page=1&include_adult=true";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -86,20 +107,21 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
                             //Add movies to the list
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
-                                String movieName = hit.getString("title");
-                                String movieCategory = hit.getString("release_date");
-                                String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
-                                String moviePoster = null;
-
-                                if (hit.getString("poster_path" ) == "null")
+                                String movieName ;
+                                String movieCategory;
+                                if (type.equals("tv"))
                                 {
-                                    moviePoster = "https://www.hertrack.com/wp-content/uploads/2018/10/no-image.jpg";
+                                    movieName = hit.getString("name");
+                                    movieCategory = hit.getString("first_air_date");
                                 }
                                 else
                                 {
-                                    moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
-
+                                    movieName = hit.getString("title");
+                                    movieCategory = hit.getString("release_date");
                                 }
+
+                                String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
+                                String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
                                 String id = hit.getString("id");
                                 mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
                             }

@@ -16,7 +16,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.ExampleViewHol
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClickCast(int position,ArrayList<CastMember> t);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -67,7 +67,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.ExampleViewHol
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.onItemClick(position);
+                            mListener.onItemClickCast(position,mExampleList);
                         }
                     }
                 }
