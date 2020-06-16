@@ -37,6 +37,7 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
     private ArrayList<MovieItem> mTrendingList;
     private MoviesAdapter mTrendingAdapter;
     private EditText mSearchText;
+    String queryType;
 
 
     @Override
@@ -74,7 +75,8 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
         mRequestQueue = Volley.newRequestQueue(this);
 
         Intent intent = getIntent();
-        trendingList(intent.getStringExtra("query"),intent.getStringExtra("type"));
+        queryType = intent.getStringExtra("type");
+        trendingList(intent.getStringExtra("query"),queryType);
 
         mSearchText = findViewById(R.id.searchTextPage);
         mSearchText.setOnKeyListener(new View.OnKeyListener() {
@@ -112,16 +114,16 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
                                 if (type.equals("tv"))
                                 {
                                     movieName = hit.getString("name");
-                                    movieCategory = hit.getString("first_air_date");
+                                    movieCategory = hit.isNull("first_air_date") ? "" :  hit.getString("first_air_date");
                                 }
                                 else
                                 {
                                     movieName = hit.getString("title");
-                                    movieCategory = hit.getString("release_date");
+                                    movieCategory = hit.isNull("release_date") ? "" :  hit.getString("release_date");
                                 }
 
-                                String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
-                                String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
+                                String moviePoster = hit.isNull("poster_path") ? "https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png" :  "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
+                                String movieBack = hit.isNull("backdrop_path") ? "" :  "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
                                 String id = hit.getString("id");
                                 mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
                             }
@@ -148,8 +150,7 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
         Intent detailIntent = new Intent(this, MovieDetailsActivity.class);
         MovieItem clickedItem = t.get(position);
         detailIntent.putExtra("id", clickedItem.getId());
-        detailIntent.putExtra("type","movie");
-
+        detailIntent.putExtra("type",queryType);
         startActivity(detailIntent);
     }
 }

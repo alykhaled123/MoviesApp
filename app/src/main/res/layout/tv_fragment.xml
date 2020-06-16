@@ -64,65 +64,10 @@
 
 
             <!--Top movie poster-->
-            <FrameLayout
-                android:id="@+id/topShow_poster"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/topShowsSlider"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/TvBack"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/topmovieplacholder" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/gradient_topmovie" />
-
-                </FrameLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="100">
-                    <TextView
-                        android:id="@+id/topShow_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="30"
-                        android:fontFamily="@font/suprema_bold"
-                        android:gravity="bottom"
-                        android:text="Lorem"
-                        android:maxLength="40"
-                        android:textAlignment="gravity"
-                        android:textColor="#FFF"
-                        android:textSize="30dp" />
-                    <TextView
-                        android:id="@+id/topShow_overview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="70"
-                        android:maxLines="4"
-                        android:layout_marginRight="20dp"
-                        android:fontFamily="@font/suprema_bold"
-                        android:text="Scoop"
-                        android:textAlignment="gravity"
-                        android:textColor="#FFF"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-            </FrameLayout>
+                android:layout_height="215dp" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -22,6 +22,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -54,7 +56,9 @@ public class TvFragment extends Fragment implements MoviesAdapter.OnItemClickLis
     private MoviesAdapter mTrendingAdapter;
 
     private ArrayList<MovieItem> mTopList;
+    private ArrayList<MovieItem> mTopFiveMovies;
     private MoviesAdapter mTopAdapter;
+    ViewPager viewPager;
 
     private FrameLayout mMoviePoster;
 
@@ -66,6 +70,7 @@ public class TvFragment extends Fragment implements MoviesAdapter.OnItemClickLis
         View view = inflater.inflate(R.layout.tv_fragment,container,false);
         mTrendingList = new ArrayList<>();
         mTopList = new ArrayList<>();
+        mTopFiveMovies = new ArrayList<>();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         LinearLayoutManager HorizontalLayout;
@@ -83,9 +88,6 @@ public class TvFragment extends Fragment implements MoviesAdapter.OnItemClickLis
         mTopView.setHasFixedSize(true);
         mTopView.setLayoutManager(TopHorizontalLayout);
 
-        mFirstImage = view.findViewById(R.id.TvBack);
-        mTopMovieName = view.findViewById(R.id.topShow_name);
-        mTopMovieOverview = view.findViewById(R.id.topShow_overview);
 
         mTrailer = view.findViewById(R.id.ShowTrailer);
         mTrailer.getSettings().setLoadsImagesAutomatically(true);
@@ -95,17 +97,8 @@ public class TvFragment extends Fragment implements MoviesAdapter.OnItemClickLis
         mTrailerName = view.findViewById(R.id.TvTrailer);
 
         mRequestQueue = Volley.newRequestQueue(getContext());
+        viewPager = (ViewPager) view.findViewById(R.id.topShowsSlider);
 
-        mMoviePoster = (FrameLayout) view.findViewById(R.id.topShow_poster);
-        mMoviePoster.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                Intent detailIntent = new Intent(getContext(), MovieDetailsActivity.class);
-                detailIntent.putExtra("id", posterID);
-                detailIntent.putExtra("type","tv");
-                startActivity(detailIntent);
-
-            }
-        });
 
         mSearchText = view.findViewById(R.id.TvSearchText);
         mSearchText.setOnKeyListener(new View.OnKeyListener() {
@@ -142,13 +135,6 @@ public class TvFragment extends Fragment implements MoviesAdapter.OnItemClickLis
                             //Get random movie
                             JSONObject randomhit = jsonArray.getJSONObject(rand.nextInt(jsonArray.length()-1));
 
-                            //Add the poster and name of the random hit
-                            String movieBack= "https://image.tmdb.org/t/p/original" + randomhit.getString("backdrop_path");
-                            Picasso.get().load(movieBack).fit().centerInside().into(mFirstImage);
-
-                            mTopMovieName.setText(randomhit.getString("name"));
-                            mTopMovieOverview.setText(randomhit.getString("overview"));
-
                             //Set trailer video to random hit
                             trailerVideo(randomhit.getInt("id"),randomhit.getString("name"));
 
@@ -159,8 +145,23 @@ public class TvFragment extends Fragment implements MoviesAdapter.OnItemClickLis
                                 String movieCategory = hit.getString("first_air_date");
                                 String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
                                 String id = hit.getString("id");
-                                mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
+                                mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,""));
                             }
+                            for (int i = 0; i < 5; i++)
+                            {
+                                JSONObject hit = jsonArray.getJSONObject(i);
+                                String movieName = hit.getString("name");
+                                String movieCategory = hit.getString("overview");
+                                String moviePoster = String.valueOf(hit.getDouble("vote_average"));
+                                String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
+
+                                String id = hit.getString("id");
+                                mTopFiveMovies.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
+                            }
+                            TopMoviesAdapter viewPagerAdapter = new TopMoviesAdapter(getContext(),mTopFiveMovies);
+
+                            viewPager.setAdapter(viewPagerAdapter);
+                            viewPagerAdapter.setOnItemClickListener(TvFragment.this);
 
                             mTrendingAdapter = new MoviesAdapter(getContext(), mTrendingList);
                             mTrendingView.setAdapter(mTrendingAdapter);

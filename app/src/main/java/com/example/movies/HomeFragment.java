@@ -157,7 +157,10 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
         }
     }
 
+
+
     private void trendingList() {
+
         String url = "https://api.themoviedb.org/3/movie/popular?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -173,8 +176,8 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String movieName = hit.getString("title");
-                                String movieCategory = hit.getString("release_date");
-                                String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
+                                String movieCategory = hit.isNull("release_date") ? "" :  hit.getString("release_date");
+                                String moviePoster = hit.isNull("poster_path") ? "" :  "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
                                 String id = hit.getString("id");
                                 mTrendingList.add(new MovieItem(id,movieName ,movieCategory, moviePoster,""));
                             }
