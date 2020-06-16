@@ -25,37 +25,85 @@
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="70"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/topmovie_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_weight="30"
+                android:fontFamily="@font/suprema_bold"
+                android:gravity="bottom"
+                android:text="Lorem"
+                android:maxLength="40"
+                android:textAlignment="gravity"
+                android:textColor="#FFF"
+                android:textSize="30dp" />
+            <TextView
+                android:id="@+id/topmovie_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingStart="15dp"
+                android:paddingBottom="15dp"
+                android:maxLines="4"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/suprema_bold"
+                android:text="Scoop"
+                android:textAlignment="gravity"
+                android:textColor="#FFF"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rate"
+                android:layout_weight="20"
+                android:textColor="#FFF"
+                android:paddingStart="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/suprema_bold"
+                android:textSize="15dp"/>
+            <TextView
+                android:id="@+id/rateTxtPoster"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:layout_weight="20"
+                android:textColor="#DE1F1C"
+                android:paddingStart="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/suprema_bold"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="100">
-        <TextView
-            android:id="@+id/topmovie_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="30"
-            android:fontFamily="@font/suprema_bold"
-            android:gravity="bottom"
-            android:text="Lorem"
-            android:maxLength="40"
-            android:textAlignment="gravity"
-            android:textColor="#FFF"
-            android:textSize="30dp" />
-        <TextView
-            android:id="@+id/topmovie_overview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="70"
-            android:maxLines="4"
-            android:layout_marginRight="20dp"
-            android:fontFamily="@font/suprema_bold"
-            android:text="Scoop"
-            android:textAlignment="gravity"
-            android:textColor="#FFF"
-            android:textSize="15dp" />
+
+
     </LinearLayout>
 
 </FrameLayout>

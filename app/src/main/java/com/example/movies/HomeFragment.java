@@ -105,13 +105,13 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
 
         viewPager = (ViewPager) view.findViewById(R.id.topMoviesSlider);
 
-        viewPager.setOnClickListener(new View.OnClickListener(){
+        mTrailerName.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
-                /*Intent detailIntent = new Intent(getContext(), MovieDetailsActivity.class);
+                Intent detailIntent = new Intent(getContext(), MovieDetailsActivity.class);
                 detailIntent.putExtra("id", posterID);
                 detailIntent.putExtra("type","movie");
 
-                startActivity(detailIntent);*/
+                startActivity(detailIntent);
 
             }
         });
@@ -139,14 +139,15 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
         topList();
         return view;
     }
-    private void randomhit(JSONObject response)
-    {
+
+    private void randomhit(JSONObject response) {
         try {
             Random rand = new Random();
             JSONArray jsonArray = response.getJSONArray("results");
 
             //Get random movie
             JSONObject randomhit = jsonArray.getJSONObject(rand.nextInt(jsonArray.length()-1));
+            posterID = randomhit.getString("id");
 
             //Set trailer video to random hit
             trailerVideo(randomhit.getInt("id"),randomhit.getString("title"));
@@ -155,7 +156,6 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
             e.printStackTrace();
         }
     }
-
 
     private void trendingList() {
         String url = "https://api.themoviedb.org/3/movie/popular?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US&page=1";
@@ -184,7 +184,7 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
                                 JSONObject hit = jsonArray.getJSONObject(i);
                                 String movieName = hit.getString("title");
                                 String movieCategory = hit.getString("overview");
-                                String moviePoster = "https://image.tmdb.org/t/p/original" + hit.getString("poster_path");
+                                String moviePoster = String.valueOf(hit.getDouble("vote_average"));
                                 String movieBack= "https://image.tmdb.org/t/p/original" + hit.getString("backdrop_path");
                                 String id = hit.getString("id");
                                 mTopFiveMovies.add(new MovieItem(id,movieName ,movieCategory, moviePoster,movieBack));
@@ -246,6 +246,7 @@ public class HomeFragment extends Fragment implements MoviesAdapter.OnItemClickL
         });
         mRequestQueue.add(request);
     }
+
     private void trailerVideo(int id, String name) {
         final String n = name;
         String url = "https://api.themoviedb.org/3/movie/"+id+"/videos?api_key=2d3edd3500f7064e849c3694f8e0327c&language=en-US";

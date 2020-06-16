@@ -148,6 +148,8 @@ public class SearchActitivty extends AppCompatActivity implements MoviesAdapter.
         Intent detailIntent = new Intent(this, MovieDetailsActivity.class);
         MovieItem clickedItem = t.get(position);
         detailIntent.putExtra("id", clickedItem.getId());
+        detailIntent.putExtra("type","movie");
+
         startActivity(detailIntent);
     }
 }

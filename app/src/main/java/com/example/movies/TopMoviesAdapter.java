@@ -51,6 +51,8 @@ public class TopMoviesAdapter extends PagerAdapter {
         movieName.setText(movies.get(position).getName());
         TextView movieOverview = view.findViewById(R.id.topmovie_overview);
         movieOverview.setText(movies.get(position).getCategory());
+        TextView movieRate = view.findViewById(R.id.rateTxtPoster);
+        movieRate.setText(movies.get(position).getPoster());
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

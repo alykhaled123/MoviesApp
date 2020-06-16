@@ -11,7 +11,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#111111"
+        android:background="@color/backgroundColor"
 
         tools:context=".MainActivity">
 
@@ -26,23 +26,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#111111"
-                android:weightSum="100"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <!--Title Text-->
                 <TextView
                     android:id="@+id/titletext"
-                    android:layout_width="0dp"
-                    android:layout_weight="89"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#111111"
-                    android:fontFamily="@font/changaone_regular"
+                    android:fontFamily="@font/suprema_bold"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Netflix"
-                    android:textColor="#b81522"
+                    android:text="Movies"
+                    android:textColor="#DE1F1C"
                     android:textSize="30dp" />
 
                 <!--Profile Icon-->
@@ -67,7 +65,6 @@
             </LinearLayout>
 
             <!--Search bar-->
-
 
             <EditText
                 android:id="@+id/searchText"
@@ -108,13 +105,15 @@
                 android:orientation="horizontal">
 
             </androidx.recyclerview.widget.RecyclerView>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#1C1C1C"/>
+                android:background="#DE1F1C"/>
+
             <TextView
                 android:id="@+id/movieTrailer"
                 android:layout_width="match_parent"
@@ -140,7 +139,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:background="#1C1C1C"/>
+                android:background="#DE1F1C"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

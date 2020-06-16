@@ -6,7 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class MovieDetailsActivity extends AppCompatActivity implements CastAdapter.OnItemClickListener , MoviesAdapter.OnItemClickListener {
@@ -44,6 +50,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements CastAdapt
 
     private TextView movieName;
     private TextView movieOverview;
+    private TextView movieRate;
+    private TextView movieVotes;
+    private TextView movieTime;
+    private TextView movieSeaasons;
     private ImageView moviePoster;
     private RecyclerView mSimilarMovies;
     private RecyclerView mCastView;
@@ -65,6 +75,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements CastAdapt
         
         movieName = (TextView) findViewById(R.id.moviename);
         movieOverview = (TextView) findViewById(R.id.moviedesc);
+        movieRate = findViewById(R.id.rateTxt);
+        movieVotes = findViewById(R.id.votesTxt);
+        movieTime = findViewById(R.id.movieTime);
+        movieSeaasons = findViewById(R.id.movieSeasons);
         moviePoster = (ImageView) findViewById(R.id.poster);
         mSimilarMovies =  findViewById(R.id.similar_movies_view);
         mCastView =findViewById(R.id.cast_view);
@@ -104,14 +118,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements CastAdapt
 
         mTrailerFrame = findViewById(R.id.trailerFrame);
 
-        childScrollView.setOnTouchListener(new View.OnTouchListener() {
+        /*childScrollView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        /* Disallow ScrollView to intercept touch events. */
+                        *//* Disallow ScrollView to intercept touch events. *//*
                         v.getParent().requestDisallowInterceptTouchEvent(true);
                         break;
 
@@ -123,7 +137,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements CastAdapt
 
                 return false;
             }
-        });
+        });*/
 
 
         Intent intent = getIntent();
@@ -145,17 +159,41 @@ public class MovieDetailsActivity extends AppCompatActivity implements CastAdapt
                             {
                                 movieName.setText(response.getString("name"));
                                 movieOverview.setText(response.getString("overview"));
+                                String episodesTxt= "Number of episodes: "+String.valueOf(response.getInt("number_of_episodes"));
+                                movieTime.setText(episodesTxt);
+                                String seasonsTxt= "Number of episodes: "+String.valueOf(response.getInt("number_of_seasons"));
+                                movieSeaasons.setText(seasonsTxt);
+
+
                             }
                             else
                             {
+                                int time = response.getInt("runtime");
+                                int hours = 0, minutes = 0;
+                                while(time >= 60)
+                                {
+                                    time -= 60;
+                                    hours++;
+                                }
+                                NumberFormat myFormat = NumberFormat.getInstance();
+                                myFormat.setGroupingUsed(true);
+                                int budget;
+                                minutes = time;
                                 movieName.setText(response.getString("title"));
                                 movieOverview.setText(response.getString("overview"));
+                                movieTime.setText(String.valueOf(hours) + "h" + " " + String.valueOf(time) + "m");
+                                movieSeaasons.setText("Budget: $" + myFormat.format(response.getInt("budget"))+"\n\nRevenue: $"+myFormat.format(response.getInt("revenue")));
+
                             }
 
 
 
+                            movieRate.setText(String.valueOf(response.getDouble("vote_average")));
+
+
+                            movieVotes.setText(String.valueOf(response.getInt("vote_count")) + " votes");
                             String moviePosterUrl = "https://image.tmdb.org/t/p/original" + response.getString("poster_path");
-                            String movieBack= "https://image.tmdb.org/t/p/original" + response.getString("backdrop_path");
+                            //String movieBack= "https://image.tmdb.org/t/p/original" + response.getString("backdrop_path");
                             Picasso.get().load(moviePosterUrl).fit().centerInside().into(moviePoster);
                             JSONObject videosArray = response.getJSONObject("videos");
 

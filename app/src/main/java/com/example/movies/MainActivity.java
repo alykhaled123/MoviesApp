@@ -58,9 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new MenuFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,
                                 selectedFragment).commit();
-
-
-                        break;
+                       break;
                 }
 
             } catch (Exception e) {

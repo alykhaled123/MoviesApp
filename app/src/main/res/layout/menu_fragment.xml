@@ -1,28 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111111">
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1C1C1C"
-        android:layout_margin="10dp"
-        android:text="About"
-        />
+    android:background="#111111"
+    android:id="@+id/rl">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#111111">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Movies &amp; TV Shows"
+            android:textAlignment="center"
+            android:textColor="#363636"
+            android:textSize="33dp"
+            android:fontFamily="@font/suprema_bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Created by: Aly Khaled"
+            android:textAlignment="center"
+            android:textColor="#363636"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
+            android:fontFamily="@font/suprema_bold"/>
+        <Button
+            android:id="@+id/aboutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1C1C1C"
+            android:layout_margin="10dp"
+            android:text="About"
+            />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1C1C1C"
-        android:layout_margin="10dp"
-        android:text="Web API"
-        />
-    <ToggleButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1C1C1C"
-        android:layout_margin="10dp"
-        android:textOn="Dark mode"
-        android:textOff="Light mode"/>
-</LinearLayout>
+        <Button
+            android:id="@+id/apibtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1C1C1C"
+            android:layout_margin="10dp"
+            android:text="Web API"
+            />
+       <!-- <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1C1C1C"
+            android:layout_margin="10dp"
+            android:textOn="Dark mode"
+            android:textOff="Light mode"/>-->
+    </LinearLayout>
+
+</RelativeLayout>

@@ -37,14 +37,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ExampleVie
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
         MovieItem currentItem = mExampleList.get(position);
         String posterurl = currentItem.getPoster();
-        String backurl = currentItem.getBack();
         String movieName = currentItem.getName();
         String movieCategory = currentItem.getCategory();
         holder.mMovieName.setText(movieName);
         holder.mMovieCategory.setText(movieCategory);
         Picasso.get().load(posterurl).fit().centerInside().into(holder.mMoviePoster);
-        //Picasso.get().load(backurl).fit().centerInside().into(holder.mMovieBack);
-//j
     }
     @Override
     public int getItemCount() {

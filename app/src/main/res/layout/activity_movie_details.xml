@@ -13,6 +13,128 @@
             android:layout_height="match_parent"
             android:background="#111111"
             android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/poster"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/movieposter"
+                    android:adjustViewBounds="true"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_topmovie" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:weightSum="100"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="70"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/moviename"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textColor="#FFF"
+                            android:padding="15dp"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/suprema_bold"
+                            android:textSize="30dp"/>
+                        <TextView
+                            android:id="@+id/movieTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="2h 20m"
+                            android:textColor="#FFF"
+                            android:paddingStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/suprema_bold"
+                            android:textSize="15dp"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#DE1F1C"/>
+                        <TextView
+                            android:id="@+id/movieSeasons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="2h 20m"
+                            android:textColor="#FFF"
+                            android:paddingStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/suprema_bold"
+                            android:textSize="15dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rate"
+                            android:layout_weight="20"
+                            android:textColor="#FFF"
+                            android:paddingStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/suprema_bold"
+                            android:textSize="15dp"/>
+                        <TextView
+                            android:id="@+id/rateTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0.0"
+                            android:layout_weight="20"
+                            android:textColor="#DE1F1C"
+                            android:paddingStart="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/suprema_bold"
+                            android:textSize="25dp"/>
+                        <TextView
+                            android:id="@+id/votesTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="500"
+                            android:layout_weight="20"
+                            android:textColor="#FFF"
+                            android:paddingStart="15dp"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/suprema_bold"
+                            android:textSize="10dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/moviedesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFF"
+                android:padding="15dp"
+                android:text="Lorem "
+                android:fontFamily="@font/suprema_bold"
+                android:textSize="15dp"/>
+
             <FrameLayout
                 android:id="@+id/trailerFrame"
                 android:layout_width="match_parent"
@@ -27,48 +149,6 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/gradient_topmovie" />
             </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/poster"
-                    android:layout_width="196dp"
-                    android:layout_height="287dp"
-
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/movieposter" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/moviename"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textColor="#FFF"
-                        android:padding="15dp"
-                        android:fontFamily="@font/suprema_bold"
-                        android:textSize="30dp"/>
-                    <ScrollView
-                        android:id="@+id/descScrollView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:id="@+id/moviedesc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                            android:textColor="#FFF"
-                            android:padding="15dp"
-                            android:fontFamily="@font/suprema_bold"
-                            android:textSize="15dp"/>
-                    </ScrollView>
-                </LinearLayout>
-            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:listitem="@layout/cast_item">
 
             </androidx.recyclerview.widget.RecyclerView>
 
