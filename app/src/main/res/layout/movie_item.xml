@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
 
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/logo"/>
         <TextView
             android:id="@+id/movie_name"
             android:layout_width="match_parent"

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/ratingSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IMDB Rate:"
+            android:textColor="#FFF"
+            android:paddingStart="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="bottom"
+            android:fontFamily="@font/suprema_bold"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/rateValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:textColor="#DE1F1C"
+            android:paddingStart="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="bottom"
+            android:fontFamily="@font/suprema_bold"
+            android:textSize="20dp"/>
+    </LinearLayout>
+</LinearLayout>
